@@ -1,11 +1,11 @@
-use crate::vector3::Vector3;
 use crate::transform::Transform;
 
 pub struct Camera {
     transform: Transform,
     fov: f32,
-    front: f32,
-    back: f32,
+    near: f32,
+    far: f32,
+    aspect: f32,
 }
 
 impl Camera {
@@ -13,8 +13,9 @@ impl Camera {
         Camera {
             transform: Transform::new(),
             fov: 60.0,
-            front: 0.01,
-            back: 100.0,
+            near: 0.01,
+            far: 100.0,
+            aspect: 16.0 / 9.0,
         }
     }
 

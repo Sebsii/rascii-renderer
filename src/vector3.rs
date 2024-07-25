@@ -1,10 +1,11 @@
 use std::fmt;
+use std::ops::Div;
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub struct Vector3 {
-    x: f32,
-    y: f32,
-    z: f32,
+    pub x: f32,
+    pub y: f32,
+    pub z: f32,
 }
 
 impl Vector3 {
@@ -20,11 +21,11 @@ impl Vector3 {
         Vector3::new(0.0, 0.0, 0.0)
     }
 
-    fn dot(&self, other: &Vector3) -> f32 {
+    pub fn dot(&self, other: &Vector3) -> f32 {
         self.x * other.x + self.y * other.y + self.z * other.z
     }
 
-    fn cross(&self, other: &Vector3) -> Vector3 {
+    pub fn cross(&self, other: &Vector3) -> Vector3 {
         Vector3 {
             x: self.y * other.z - self.z * other.y,
             y: self.z * other.x - self.x * other.z,
@@ -32,8 +33,13 @@ impl Vector3 {
         }
     }
 
-    fn magnitude(&self) -> f32 {
+    pub fn magnitude(&self) -> f32 {
         (self.x * self.x + self.y * self.y + self.z * self.z).sqrt()
+    }
+
+    pub fn normalized(&self) -> Vector3 {
+        let magnitude = self.magnitude();
+        *self / magnitude
     }
 }
 
@@ -46,5 +52,17 @@ impl fmt::Display for Vector3 {
 impl Default for Vector3 {
     fn default() -> Self {
         Vector3::zero()
+    }
+}
+
+impl Div<f32> for Vector3 {
+    type Output = Vector3;
+
+    fn div(self, rhs: f32) -> Vector3 {
+        Vector3 {
+            x: self.x / rhs,
+            y: self.y / rhs,
+            z: self.z / rhs,
+        }
     }
 }
